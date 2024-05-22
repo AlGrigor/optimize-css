@@ -1,43 +1,24 @@
 // src/removeDuplicates.js
 
-// Функция для удаления дублирующихся CSS правил
+// Функция для удаления дублирующихся CSS блоков стилей
 function removeDuplicateCSS(content) {
-  const lines = content.split('\n');
-  const result = [];
-  const uniqueBlocks = {};
+const blocks = content.split(/\}\s*/); // Разделяем содержимое на блоки стилей
+const uniqueBlocks = new Set();
 
-  let selector = '';
-  let cssBlock = [];
+const result = blocks.reduce((acc, block) => {
+  // Удаляем комментарии из блока
+  const cleanedBlock = block.replace(/\/\*[\s\S]*?\*\//g, '');
 
-  lines.forEach(line => {
-    const trimmedLine = line.trim();
+  // Добавляем блок в результат, если он уникален
+  if (!uniqueBlocks.has(cleanedBlock)) {
+    uniqueBlocks.add(cleanedBlock);
+    acc.push(block);
+  }
 
-    if (trimmedLine.endsWith('{')) {
-      selector = trimmedLine;
-      cssBlock = [];
-    }
+  return acc;
+}, []);
 
-    if (selector) {
-      cssBlock.push(line);
-
-      if (trimmedLine.endsWith('}')) {
-        const blockString = cssBlock.map(l => l.trim()).join('');
-
-        // Проверяем, был ли блок CSS уже добавлен
-        if (!uniqueBlocks[blockString]) {
-          uniqueBlocks[blockString] = true;
-          result.push(...cssBlock);
-        }
-
-        selector = '';
-        cssBlock = [];
-      }
-    } else if (trimmedLine) {
-      result.push(line);
-    }
-  });
-
-  return result.join('\n');
+return result.join('}\n').trim(); // Собираем результат обратно в строку
 }
 
 module.exports = removeDuplicateCSS;

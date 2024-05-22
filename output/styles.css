@@ -1,27 +1,8 @@
-/* этот комментарий удалять не нужно */
-body {
-  margin: 0;
-  padding: 0;
-}
-/* этот комментарий удалять не нужно */
-h1,h2,h3 {/* этот комментарий нужно удалить */color: blue;}
-h1 {font-size: 2em;}
-/* этот комментарий удалять не нужно */
-body {
-  font-family: Arial, sans-serif;
-}
-h2{
-    color: blue;
-  }
+h1 { font-size: 2em;}
 h1 {
-    /* этот комментарий нужно удалить */
+
   font-size: 2em;
 }
 h1 {
   color: blue;
 }
-h2 {color: blue;}
-h3 {
-  color: blue;
-}
-/* этот комментарий удалять не нужно */
